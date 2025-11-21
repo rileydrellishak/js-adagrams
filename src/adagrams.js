@@ -21,7 +21,24 @@ const buildLetterPool = () => {
   } return letterPool;
 };
 
+const freqCheck = (tile, hand) => {
+  const countOfLetterInHand = hand.filter((letter) => letter === tile);
+  if (countOfLetterInHand.length < LETTERS[tile].freq) {
+    return true;
+  } return false;
+};
+
 export const drawLetters = () => {
+  const letterPool = buildLetterPool();
+  const maxRandomIndex = (letterPool.length);
+  const hand = [];
+  while (hand.length < 10) {
+    let randomIndex = Math.floor(Math.random() * maxRandomIndex);
+    let tile = letterPool[randomIndex];
+    if (freqCheck(tile, hand)) {
+      hand.push(tile);
+    }
+  } return hand;
 }
 
 export const usesAvailableLetters = (input, lettersInHand) => {
