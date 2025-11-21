@@ -1,5 +1,7 @@
 // import { random } from 'core-js/core/number';
 
+// import { isInteger } from "core-js/core/number";
+
 const LETTERS = {
   A: {freq: 9, value: 1}, B: {freq: 2, value: 3}, C: {freq: 2, value: 3},
   D: {freq: 4, value: 2}, E: {freq: 12, value: 1}, F: {freq: 2, value: 4},
@@ -39,10 +41,27 @@ export const drawLetters = () => {
       hand.push(tile);
     }
   } return hand;
-}
+};
+
+const createFreqMap = (item) => {
+  const freqMap = {};
+  for (let i of item) {
+    if (Object.hasOwn(freqMap, i)) {
+      freqMap[i] += 1;
+    } else {
+      freqMap[i] = 1;
+    }
+  } return freqMap;
+};
 
 export const usesAvailableLetters = (input, lettersInHand) => {
-  // Implement this method for wave 2
+  const wordFreqMap = createFreqMap(input);
+  const handFreqMap = createFreqMap(lettersInHand);
+  for (const letter of Object.keys(wordFreqMap)) {
+    if (isNaN(handFreqMap[letter]) || wordFreqMap[letter] > handFreqMap[letter]) {
+      return false;
+    }
+  } return true;
 };
 
 export const scoreWord = (word) => {
