@@ -1,6 +1,4 @@
-// import { random } from 'core-js/core/number';
 
-// import { isInteger } from "core-js/core/number";
 
 const LETTERS = {
   A: {freq: 9, value: 1}, B: {freq: 2, value: 3}, C: {freq: 2, value: 3},
@@ -65,7 +63,16 @@ export const usesAvailableLetters = (input, lettersInHand) => {
 };
 
 export const scoreWord = (word) => {
-  // Implement this method for wave 3
+  if (word.trim() === '') {
+    return 0;
+  }
+  const wordUpper = word.toUpperCase();
+  let score = 0;
+  for (let char of wordUpper) {
+    score += LETTERS[char].value;
+  } if (wordUpper.length >= 7) {
+    score += 8;
+  } return score;
 };
 
 export const highestScoreFrom = (words) => {
