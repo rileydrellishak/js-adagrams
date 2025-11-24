@@ -75,6 +75,13 @@ export const scoreWord = (word) => {
   } return score;
 };
 
+const createScoreBoard = (words) => {
+  let scoreBoard = [];
+  for (let word of words) {
+    scoreBoard.push([word, scoreWord(word)]);
+  } return scoreBoard;
+};
+
 export const highestScoreFrom = (words) => {
   // Implement this method for wave 4
 };
