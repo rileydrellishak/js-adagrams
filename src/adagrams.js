@@ -75,26 +75,42 @@ export const scoreWord = (word) => {
     F: 4, H: 4, V: 4, W: 4, Y: 4,
     K: 5, J: 8, X: 8, Q: 10, Z: 10
   };
-  if (word.trim() === '') {
-    return 0;
-  }
   let score = 0;
-  for (let letter of word.toUpperCase()) {
+  const wordUpper = word.toUpperCase();
+  for (let letter of wordUpper) {
     score += LETTER_SCORES[letter];
   } if (word.length >= 7) {
     score += 8;
   } return score;
 };
 
-const createScoreBoard = (words) => {
-  let scoreBoard = [];
+const getTiedWords = (words) => {
+  let wordsAndScores = [];
+  let highScore = scoreWord(words[0]);
   for (let word of words) {
-    scoreBoard.push([word, scoreWord(word)]);
-  } return scoreBoard;
+    if (scoreWord(word) >= highScore) {
+      wordsAndScores.push({'score': scoreWord(word), 'word': word});
+      highScore = scoreWord(word);
+    }
+  }
+  let tiedWords = [];
+  for (let i = 0; i < wordsAndScores.length; i ++) {
+    if (wordsAndScores[i].score === highScore) {
+      tiedWords.push(wordsAndScores[i]);
+    }
+  } return tiedWords;
 };
 
 export const highestScoreFrom = (words) => {
-  let winningWordAndScore = {word: '', score: 0};
-  
-  return winningWordAndScore;
+  const tiedWords = getTiedWords(words);
+  if (tiedWords.length === 1) {
+    return tiedWords[0];
+  } let shortestWord = tiedWords[0];
+  for (let i = 0; i < tiedWords.length; i ++) {
+    if (tiedWords[i].word.length === 10) {
+      return tiedWords[i];
+    } if (tiedWords[i].word.length < shortestWord.word.length) {
+      shortestWord = tiedWords[i];
+    }
+  } return shortestWord;
 };
