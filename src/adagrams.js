@@ -79,8 +79,8 @@ export const scoreWord = (word) => {
     return 0;
   }
   let score = 0;
-  for (let char of word.toUpperCase()) {
-    score += LETTER_SCORES[char];
+  for (let letter of word.toUpperCase()) {
+    score += LETTER_SCORES[letter];
   } if (word.length >= 7) {
     score += 8;
   } return score;
@@ -94,5 +94,7 @@ const createScoreBoard = (words) => {
 };
 
 export const highestScoreFrom = (words) => {
-  // Implement this method for wave 4
+  let winningWordAndScore = {word: '', score: 0};
+  
+  return winningWordAndScore;
 };
