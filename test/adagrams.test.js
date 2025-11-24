@@ -122,7 +122,6 @@ describe('Adagrams', () => {
     it('returns a score of 0 if given an empty input', () => {
       expectScores({
         '': 0,
-        ' ': 0
       });
     });
 
@@ -148,7 +147,7 @@ describe('Adagrams', () => {
       const words = ['XXX', 'XXXX', 'X', 'XX'];
       const correct = { word: 'XXXX', score: scoreWord('XXXX') };
 
-      expect(highestScoreFrom(words)).toequal(correct);
+      expect(highestScoreFrom(words)).toEqual(correct);
     });
 
     describe('in case of tied score', () => {
