@@ -84,21 +84,28 @@ export const scoreWord = (word) => {
   } return score;
 };
 
-const getTiedWords = (words) => {
-  let wordsAndScores = [];
-  let highScore = scoreWord(words[0]);
+const createWordScoreObjects = (words) => {
+  let wordScoreObjects = [];
   for (let word of words) {
-    if (scoreWord(word) >= highScore) {
-      wordsAndScores.push({'score': scoreWord(word), 'word': word});
-      highScore = scoreWord(word);
+    wordScoreObjects.push({'score': scoreWord(word), 'word': word});
+  } return wordScoreObjects;
+};
+
+const getMaxScore = (wordScoreObjects) => {
+  let highScore = wordScoreObjects.reduce((bestScore, current) => {
+    if (current.score > bestScore.score) {
+      return current;
+    } else {
+      return bestScore;
     }
-  }
-  let tiedWords = [];
-  for (let i = 0; i < wordsAndScores.length; i ++) {
-    if (wordsAndScores[i].score === highScore) {
-      tiedWords.push(wordsAndScores[i]);
-    }
-  } return tiedWords;
+  }); return highScore.score;
+};
+
+const getTiedWords = (words) => {
+  let wordScoreObjects = createWordScoreObjects(words);
+  let highScore = getMaxScore(wordScoreObjects);
+  let tiedWords = wordScoreObjects.filter(wordScore => wordScore.score === highScore);
+  return tiedWords;
 };
 
 export const highestScoreFrom = (words) => {
