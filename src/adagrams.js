@@ -85,10 +85,13 @@ export const scoreWord = (word) => {
 };
 
 const getMaxScore = (words) => {
-  let scores = [];
-  for (let word of words) {
-    scores.push(scoreWord(word));
-  } return Math.max(...scores);
+  let highScore = words.reduce((bestWordSoFar, currentWord) => {
+    if (scoreWord(currentWord) > scoreWord(bestWordSoFar)) {
+      return currentWord;
+    } else {
+      return bestWordSoFar;
+    }
+  }); return scoreWord(highScore);
 };
 
 const getTiedWords = (words) => {
