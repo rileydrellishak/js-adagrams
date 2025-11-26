@@ -8,11 +8,13 @@ const buildLetterPool = () => {
     U: 4, V: 2, W: 2, X: 1,
     Y: 2, Z: 1
   };
+
   const letterPool = [];
   for (const letter of Object.keys(LETTER_FREQUENCIES)) {
     for (let i = 0; i < LETTER_FREQUENCIES[letter]; i ++) {
       letterPool.push(letter);
     }
+
   } return letterPool;
 };
 
@@ -26,39 +28,47 @@ const freqCheck = (tile, hand) => {
     U: 4, V: 2, W: 2, X: 1,
     Y: 2, Z: 1
   };
+
   const tilesInHand = hand.filter((letter) => letter === tile);
   if (tilesInHand.length < LETTER_FREQUENCIES[tile]) {
     return true;
+
   } return false;
 };
 
 export const drawLetters = () => {
   const letterPool = buildLetterPool();
   const maxRandomIndex = (letterPool.length);
+
   const hand = [];
   while (hand.length < 10) {
     let randomIndex = Math.floor(Math.random() * maxRandomIndex);
     let tile = letterPool[randomIndex];
+
     if (freqCheck(tile, hand)) {
       hand.push(tile);
     }
+
   } return hand;
 };
 
 const createFreqMap = (item) => {
   const freqMap = {};
+
   for (let i of item) {
     if (i in freqMap) {
       freqMap[i] += 1;
     } else {
       freqMap[i] = 1;
     }
+
   } return freqMap;
 };
 
 export const usesAvailableLetters = (input, lettersInHand) => {
   const wordFreqMap = createFreqMap(input);
   const handFreqMap = createFreqMap(lettersInHand);
+
   for (const letter of Object.keys(wordFreqMap)) {
     if (isNaN(handFreqMap[letter]) || wordFreqMap[letter] > handFreqMap[letter]) {
       return false;
@@ -75,19 +85,26 @@ export const scoreWord = (word) => {
     F: 4, H: 4, V: 4, W: 4, Y: 4,
     K: 5, J: 8, X: 8, Q: 10, Z: 10
   };
+
   let score = 0;
   const wordUpper = word.toUpperCase();
+
   for (let letter of wordUpper) {
     score += LETTER_SCORES[letter];
-  } if (word.length >= 7) {
+  }
+
+  if (word.length >= 7) {
     score += 8;
+
   } return score;
 };
 
 const createWordScoreObjects = (words) => {
   let wordScoreObjects = [];
+
   for (let word of words) {
     wordScoreObjects.push({'score': scoreWord(word), 'word': word});
+
   } return wordScoreObjects;
 };
 
@@ -110,14 +127,19 @@ const getTiedWords = (words) => {
 
 export const highestScoreFrom = (words) => {
   const tiedWords = getTiedWords(words);
+
   if (tiedWords.length === 1) {
     return tiedWords[0];
-  } let shortestWord = tiedWords[0];
+  }
+
+  let shortestWord = tiedWords[0];
   for (let i = 0; i < tiedWords.length; i ++) {
     if (tiedWords[i].word.length === 10) {
       return tiedWords[i];
-    } if (tiedWords[i].word.length < shortestWord.word.length) {
+    }
+    if (tiedWords[i].word.length < shortestWord.word.length) {
       shortestWord = tiedWords[i];
     }
+
   } return shortestWord;
 };
