@@ -48,7 +48,7 @@ export const drawLetters = () => {
 const createFreqMap = (item) => {
   const freqMap = {};
   for (let i of item) {
-    if (Object.hasOwn(freqMap, i)) {
+    if (i in freqMap) {
       freqMap[i] += 1;
     } else {
       freqMap[i] = 1;
