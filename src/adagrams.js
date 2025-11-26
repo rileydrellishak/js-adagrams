@@ -26,8 +26,8 @@ const freqCheck = (tile, hand) => {
     U: 4, V: 2, W: 2, X: 1,
     Y: 2, Z: 1
   };
-  const countOfLetterInHand = hand.filter((letter) => letter === tile);
-  if (countOfLetterInHand.length < LETTER_FREQUENCIES[tile]) {
+  const tilesInHand = hand.filter((letter) => letter === tile);
+  if (tilesInHand.length < LETTER_FREQUENCIES[tile]) {
     return true;
   } return false;
 };
